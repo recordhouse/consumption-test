@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>소비 성향 테스트 | 나의 소비 MBTI는?</title>
+    <meta
+      name="description"
+      content="12문항으로 알아보는 재미있는 소비 성향 테스트. 나의 소비 MBTI, 지갑 밈 유형, 누적 인기 순위를 확인하고 카톡으로 공유해보세요."
+    />
+    <meta name="keywords" content="소비 성향 테스트, 소비 MBTI, 돈 테스트, 지출 테스트, 절약 테스트, 카톡 공유 테스트" />
+    <meta name="author" content="Consumption Test" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="./" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content="소비 성향 테스트 | 나의 소비 MBTI는?" />
+    <meta
+      property="og:description"
+      content="내 지갑은 계획러일까 충동러일까? 소비 MBTI 결과와 지금까지 많이 나온 성향 순위를 확인해보세요."
+    />
+    <meta property="og:image" content="./og-image.svg" />
+    <meta property="og:url" content="./" />
+    <meta property="og:site_name" content="소비 성향 테스트" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="소비 성향 테스트 | 나의 소비 MBTI는?" />
+    <meta
+      name="twitter:description"
+      content="12문항 소비 MBTI 테스트로 내 지갑의 성격을 확인하고 친구에게 공유해보세요."
+    />
+    <meta name="twitter:image" content="./og-image.svg" />
+    <meta name="theme-color" content="#ffcc32" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "소비 성향 테스트",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Any",
+        "description": "12문항으로 알아보는 소비 MBTI 테스트와 누적 결과 순위",
+        "inLanguage": "ko-KR",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KRW"
+        }
+      }
+    </script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.5/kakao.min.js" defer></script>
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar" aria-label="사이트 헤더">
+      <a class="brand" href="./" aria-label="소비 성향 테스트 처음으로">
+        <span class="brand-mark" aria-hidden="true">₩</span>
+        <span>소비MBTI</span>
+      </a>
+      <button class="ghost-button" type="button" data-action="reset-stats">랭킹 초기화</button>
+    </header>
+
+    <main>
+      <section class="hero screen is-active" id="intro-screen" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">지갑이 먼저 반응하는 심리테스트</p>
+          <h1 id="hero-title">나의 소비 성향 MBTI는?</h1>
+          <p class="hero-text">
+            월급날엔 왕, 말일엔 수행자. 12개 질문으로 내 지갑의 진짜 캐릭터를 찾아보세요.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-button" type="button" data-action="start">테스트 시작</button>
+            <a class="secondary-link" href="#ranking-preview">현재 랭킹 보기</a>
+          </div>
+        </div>
+
+        <div class="meme-stage" aria-hidden="true">
+          <div class="phone-meme">
+            <div class="chat-row left">나: 이번 달엔 절약한다</div>
+            <div class="chat-row right">장바구니: 7개가 기다림</div>
+            <div class="chat-row left panic">통장: 나 지금 떨고 있니</div>
+          </div>
+          <div class="wallet-card">
+            <span>지갑 상태</span>
+            <strong id="wallet-status">사회적 거리두기 중</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="ranking-preview" id="ranking-preview" aria-labelledby="preview-title">
+        <div>
+          <p class="eyebrow">실시간 느낌의 로컬 집계</p>
+          <h2 id="preview-title">지금까지 많이 나온 소비 성향</h2>
+        </div>
+        <ol class="mini-rank-list" data-rank-preview></ol>
+      </section>
+
+      <section class="quiz screen" id="quiz-screen" aria-live="polite" aria-labelledby="question-title">
+        <div class="progress-wrap" aria-label="진행률">
+          <div class="progress-meta">
+            <span data-progress-text>1 / 12</span>
+            <span data-axis-label>소비 에너지 측정 중</span>
+          </div>
+          <div class="progress-track">
+            <span class="progress-bar" data-progress-bar></span>
+          </div>
+        </div>
+
+        <article class="question-card">
+          <div class="question-count" data-question-count>Q1</div>
+          <h2 id="question-title" data-question-title></h2>
+          <p data-question-situation></p>
+          <div class="answer-grid" data-answer-grid></div>
+        </article>
+      </section>
+
+      <section class="result screen" id="result-screen" aria-labelledby="result-title">
+        <div class="result-hero">
+          <p class="eyebrow">결과 발표</p>
+          <h2 id="result-title" data-result-title></h2>
+          <p class="result-type" data-result-type></p>
+          <p class="result-copy" data-result-copy></p>
+        </div>
+
+        <div class="result-layout">
+          <article class="result-panel">
+            <h3>내 지갑 밈 해석</h3>
+            <ul class="trait-list" data-trait-list></ul>
+          </article>
+
+          <article class="result-panel">
+            <h3>소비 처방전</h3>
+            <p data-tip-text></p>
+          </article>
+        </div>
+
+        <article class="rank-board" aria-labelledby="ranking-title">
+          <div class="rank-head">
+            <div>
+              <p class="eyebrow">누적 결과</p>
+              <h3 id="ranking-title">지금까지 제일 많이 나온 성향 순위</h3>
+            </div>
+            <span data-total-count>0회 참여</span>
+          </div>
+          <ol class="rank-list" data-rank-list></ol>
+        </article>
+
+        <div class="share-actions" aria-label="결과 공유">
+          <button class="kakao-button" type="button" data-action="kakao-share">카톡으로 공유하기</button>
+          <button class="secondary-button" type="button" data-action="retry">다시 하기</button>
+        </div>
+        <p class="share-note" data-share-note></p>
+
+        <aside class="ad-banner" aria-label="추천 사이트 광고">
+          <a href="https://money.me.kr/" target="_blank" rel="noopener sponsored">
+            <span class="ad-badge">AD</span>
+            <span class="ad-copy">
+              <strong>부자 되는 방법이 궁금하다면?</strong>
+              <small>소비 성향 확인했으니 이제 돈 굴리는 법도 보러가기</small>
+            </span>
+            <span class="ad-arrow" aria-hidden="true">→</span>
+          </a>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
