@@ -6,7 +6,7 @@
     <title>소비 성향 테스트 | 나의 소비 MBTI는?</title>
     <meta
       name="description"
-      content="12문항으로 알아보는 재미있는 소비 성향 테스트. 나의 소비 MBTI, 지갑 밈 유형, 누적 인기 순위를 확인하고 카톡으로 공유해보세요."
+      content="12문항으로 알아보는 재미있는 소비 성향 테스트. 나의 소비 MBTI와 지갑 밈 유형을 확인하고 카톡으로 공유해보세요."
     />
     <meta name="keywords" content="소비 성향 테스트, 소비 MBTI, 돈 테스트, 지출 테스트, 절약 테스트, 카톡 공유 테스트" />
     <meta name="author" content="Consumption Test" />
@@ -17,7 +17,7 @@
     <meta property="og:title" content="소비 성향 테스트 | 나의 소비 MBTI는?" />
     <meta
       property="og:description"
-      content="내 지갑은 계획러일까 충동러일까? 소비 MBTI 결과와 지금까지 많이 나온 성향 순위를 확인해보세요."
+      content="내 지갑은 계획러일까 충동러일까? 소비 MBTI 결과와 지갑 밈 유형을 확인해보세요."
     />
     <meta property="og:image" content="./og-image.svg" />
     <meta property="og:url" content="./" />
@@ -38,7 +38,7 @@
         "name": "소비 성향 테스트",
         "applicationCategory": "LifestyleApplication",
         "operatingSystem": "Any",
-        "description": "12문항으로 알아보는 소비 MBTI 테스트와 누적 결과 순위",
+        "description": "12문항으로 알아보는 소비 MBTI 테스트",
         "inLanguage": "ko-KR",
         "offers": {
           "@type": "Offer",
@@ -56,8 +56,18 @@
         <span class="brand-mark" aria-hidden="true">₩</span>
         <span>소비MBTI</span>
       </a>
-      <button class="ghost-button" type="button" data-action="reset-stats">랭킹 초기화</button>
     </header>
+
+    <aside class="ad-banner global-ad" aria-label="추천 사이트 광고">
+      <a href="https://money.me.kr/" target="_blank" rel="noopener sponsored">
+        <span class="ad-badge">AD</span>
+        <span class="ad-copy">
+          <strong>부자 되는 방법이 궁금하다면?</strong>
+          <small>소비 성향 확인하기 전, 돈 굴리는 법 먼저 훑어보기</small>
+        </span>
+        <span class="ad-arrow" aria-hidden="true">→</span>
+      </a>
+    </aside>
 
     <main>
       <section class="hero screen is-active" id="intro-screen" aria-labelledby="hero-title">
@@ -69,7 +79,6 @@
           </p>
           <div class="hero-actions">
             <button class="primary-button" type="button" data-action="start">테스트 시작</button>
-            <a class="secondary-link" href="#ranking-preview">현재 랭킹 보기</a>
           </div>
         </div>
 
@@ -84,14 +93,6 @@
             <strong id="wallet-status">사회적 거리두기 중</strong>
           </div>
         </div>
-      </section>
-
-      <section class="ranking-preview" id="ranking-preview" aria-labelledby="preview-title">
-        <div>
-          <p class="eyebrow">실시간 느낌의 로컬 집계</p>
-          <h2 id="preview-title">지금까지 많이 나온 소비 성향</h2>
-        </div>
-        <ol class="mini-rank-list" data-rank-preview></ol>
       </section>
 
       <section class="quiz screen" id="quiz-screen" aria-live="polite" aria-labelledby="question-title">
@@ -121,6 +122,33 @@
           <p class="result-copy" data-result-copy></p>
         </div>
 
+        <section class="result-detail-grid" aria-label="소비 성향 상세 설명">
+          <article class="result-panel highlight-panel">
+            <h3>소비 성향</h3>
+            <p data-tendency-text></p>
+          </article>
+
+          <article class="result-panel">
+            <h3>장점</h3>
+            <ul class="trait-list" data-strength-list></ul>
+          </article>
+
+          <article class="result-panel">
+            <h3>단점</h3>
+            <ul class="trait-list warning-list" data-weakness-list></ul>
+          </article>
+
+          <article class="result-panel">
+            <h3>대표 특징</h3>
+            <ul class="trait-list" data-feature-list></ul>
+          </article>
+
+          <article class="result-panel example-panel">
+            <h3>이런 상황에서 자주 보임</h3>
+            <ul class="trait-list example-list" data-example-list></ul>
+          </article>
+        </section>
+
         <div class="result-layout">
           <article class="result-panel">
             <h3>내 지갑 밈 해석</h3>
@@ -133,33 +161,12 @@
           </article>
         </div>
 
-        <article class="rank-board" aria-labelledby="ranking-title">
-          <div class="rank-head">
-            <div>
-              <p class="eyebrow">누적 결과</p>
-              <h3 id="ranking-title">지금까지 제일 많이 나온 성향 순위</h3>
-            </div>
-            <span data-total-count>0회 참여</span>
-          </div>
-          <ol class="rank-list" data-rank-list></ol>
-        </article>
-
         <div class="share-actions" aria-label="결과 공유">
           <button class="kakao-button" type="button" data-action="kakao-share">카톡으로 공유하기</button>
           <button class="secondary-button" type="button" data-action="retry">다시 하기</button>
         </div>
         <p class="share-note" data-share-note></p>
 
-        <aside class="ad-banner" aria-label="추천 사이트 광고">
-          <a href="https://money.me.kr/" target="_blank" rel="noopener sponsored">
-            <span class="ad-badge">AD</span>
-            <span class="ad-copy">
-              <strong>부자 되는 방법이 궁금하다면?</strong>
-              <small>소비 성향 확인했으니 이제 돈 굴리는 법도 보러가기</small>
-            </span>
-            <span class="ad-arrow" aria-hidden="true">→</span>
-          </a>
-        </aside>
       </section>
     </main>
   </body>

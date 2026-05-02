@@ -1,6 +1,5 @@
 // 카카오 개발자 콘솔의 JavaScript 키를 넣으면 카톡 공유가 활성화됩니다.
 const KAKAO_JS_KEY = "";
-const STORAGE_KEY = "consumption-mbti-ranking-v1";
 
 const questions = [
   {
@@ -240,6 +239,65 @@ const resultMap = {
   }
 };
 
+const axisProfiles = {
+  E: {
+    tendency: "사람, 모임, 현장 분위기에서 소비 에너지가 올라갑니다. 혼자 고민하기보다 같이 보고, 같이 먹고, 같이 즐길 때 결제 만족도가 커지는 편입니다.",
+    strength: "경험형 소비에서 만족을 잘 뽑아내고, 모임이나 여행에서 좋은 선택지를 빠르게 찾아냅니다.",
+    weakness: "분위기에 휩쓸리면 원래 예산보다 지출이 커질 수 있습니다.",
+    feature: "맛집, 팝업, 여행, 모임처럼 현장감 있는 지출에 반응이 빠릅니다.",
+    example: "친구가 갑자기 새로 생긴 핫플을 보내면 '일단 예약 가능해?'부터 확인합니다."
+  },
+  I: {
+    tendency: "혼자 충분히 비교하고 납득한 뒤 쓰는 소비를 선호합니다. 조용히 검색하고 후기까지 확인한 다음, 마음이 안정됐을 때 결제하는 타입입니다.",
+    strength: "충동 지출을 줄이고, 실제로 오래 쓸 물건을 고르는 힘이 좋습니다.",
+    weakness: "고민이 길어져 좋은 타이밍을 놓치거나, 선택 피로 때문에 아무것도 못 살 때가 있습니다.",
+    feature: "후기, 가격 비교, 사용 환경을 차분히 확인한 뒤 움직입니다.",
+    example: "장바구니에 넣어두고 며칠 뒤에도 생각나면 그때 결제합니다."
+  },
+  S: {
+    tendency: "구체적인 가격, 스펙, 후기, 사용 빈도를 보고 판단합니다. 감보다 실제 쓸모와 조건이 맞아야 지갑이 열립니다.",
+    strength: "실패 확률이 낮고, 생활에 필요한 물건을 현실적으로 잘 고릅니다.",
+    weakness: "눈앞의 조건에 집중하다가 장기적인 만족감이나 취향의 설렘을 놓칠 수 있습니다.",
+    feature: "원가, 할인율, 배송비, AS, 내구성 같은 현실 지표를 중요하게 봅니다.",
+    example: "세일 문구를 봐도 바로 사지 않고 최근 최저가부터 확인합니다."
+  },
+  N: {
+    tendency: "물건이 주는 가능성, 분위기, 미래의 내 모습을 함께 삽니다. 소비가 단순 구매가 아니라 작은 서사가 되는 편입니다.",
+    strength: "취향 발견력이 좋고, 삶의 만족도를 올리는 소비를 잘 찾아냅니다.",
+    weakness: "상상 속 활용 장면은 많은데 실제 사용 빈도가 따라오지 않을 수 있습니다.",
+    feature: "브랜드 감성, 디자인, 새로움, 나다운 느낌에 강하게 반응합니다.",
+    example: "재킷 하나를 보며 이미 그걸 입고 걷는 주말의 장면까지 상상합니다."
+  },
+  T: {
+    tendency: "소비를 판단할 때 효율과 근거를 중요하게 봅니다. 가격 대비 성능, 사용 기간, 대체재를 따져보고 납득되면 깔끔하게 결제합니다.",
+    strength: "불필요한 지출을 잘 걸러내고 큰돈을 쓸 때도 기준이 흔들리지 않습니다.",
+    weakness: "너무 계산적으로 접근하면 감정적 만족이나 관계 비용을 과소평가할 수 있습니다.",
+    feature: "구매 이유를 논리적으로 설명할 수 있어야 마음이 편합니다.",
+    example: "비싼 장비도 사용 횟수로 나눠 하루 비용이 납득되면 구매합니다."
+  },
+  F: {
+    tendency: "기분, 관계, 위로, 감동을 중요하게 생각합니다. 돈을 쓰는 이유가 '필요해서'만이 아니라 '마음이 움직여서'일 때가 많습니다.",
+    strength: "선물, 취향템, 위로 소비처럼 만족감이 큰 지출을 잘 고릅니다.",
+    weakness: "기분이 흔들리는 날에는 예산보다 감정이 먼저 결제 버튼을 누를 수 있습니다.",
+    feature: "상대의 표정, 나의 기분, 물건이 주는 감정을 크게 봅니다.",
+    example: "친구 선물을 고르다가 예산보다 '이거 받으면 진짜 좋아하겠다'가 먼저 떠오릅니다."
+  },
+  J: {
+    tendency: "예산을 나누고 계획 안에서 쓰는 것을 좋아합니다. 지출이 정리되어 있어야 마음이 편하고, 명세서가 예측 가능할수록 안정감을 느낍니다.",
+    strength: "저축, 고정비, 생활비 관리가 탄탄하고 장기 목표를 지키는 힘이 있습니다.",
+    weakness: "계획 밖 즐거움을 죄책감으로 느껴 만족을 충분히 누리지 못할 수 있습니다.",
+    feature: "월급날 예산 배분, 구독 정리, 가계부 확인 같은 관리 행동에 강합니다.",
+    example: "월급이 들어오면 저축과 고정비를 먼저 빼고 남은 돈으로 소비합니다."
+  },
+  P: {
+    tendency: "상황과 타이밍에 맞춰 유연하게 소비합니다. 갑작스러운 기회, 한정 할인, 즉흥 약속에서 즐거움을 크게 느낍니다.",
+    strength: "좋은 기회를 빠르게 잡고, 삶을 재미있게 만드는 소비를 잘 합니다.",
+    weakness: "즉흥성이 커지면 월말의 나에게 영수증 폭탄을 넘길 수 있습니다.",
+    feature: "품절 임박, 오늘만 할인, 갑작스러운 약속처럼 지금성이 강한 지출에 민첩합니다.",
+    example: "남은 수량 2개를 보는 순간 비교 탭보다 결제창이 먼저 열립니다."
+  }
+};
+
 const state = {
   index: 0,
   scores: { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 },
@@ -261,13 +319,14 @@ const answerGrid = $("[data-answer-grid]");
 const resultTitle = $("[data-result-title]");
 const resultType = $("[data-result-type]");
 const resultCopy = $("[data-result-copy]");
+const tendencyText = $("[data-tendency-text]");
+const strengthList = $("[data-strength-list]");
+const weaknessList = $("[data-weakness-list]");
+const featureList = $("[data-feature-list]");
+const exampleList = $("[data-example-list]");
 const traitList = $("[data-trait-list]");
 const tipText = $("[data-tip-text]");
-const rankList = $("[data-rank-list]");
-const rankPreview = $("[data-rank-preview]");
-const totalCount = $("[data-total-count]");
 const shareNote = $("[data-share-note]");
-const walletStatus = $("#wallet-status");
 
 function showScreen(screen) {
   [introScreen, quizScreen, resultScreen].forEach((item) => item.classList.remove("is-active"));
@@ -331,9 +390,7 @@ function showResult() {
   const type = calculateType();
   const result = resultMap[type];
   state.currentResult = { type, ...result };
-  saveResult(type);
   renderResult(type, result);
-  renderRanking();
   showScreen(resultScreen);
 }
 
@@ -341,6 +398,7 @@ function renderResult(type, result) {
   resultTitle.textContent = result.title;
   resultType.textContent = `${type} · ${result.name}`;
   resultCopy.textContent = result.copy;
+  renderDetailedResult(type, result);
   traitList.innerHTML = "";
 
   result.traits.forEach((trait) => {
@@ -354,6 +412,28 @@ function renderResult(type, result) {
   updateMetaDescription(`${type} ${result.name}: ${result.copy}`);
 }
 
+function renderDetailedResult(type, result) {
+  const letters = type.split("");
+  const profiles = letters.map((letter) => axisProfiles[letter]);
+  tendencyText.textContent = `${result.name} 유형은 ${profiles.map((profile) => profile.tendency).join(" ")}`;
+  renderList(strengthList, profiles.map((profile) => profile.strength));
+  renderList(weaknessList, profiles.map((profile) => profile.weakness));
+  renderList(featureList, profiles.map((profile) => profile.feature));
+  renderList(exampleList, [
+    ...profiles.map((profile) => profile.example),
+    `${result.name}답게 ${result.tip}`
+  ]);
+}
+
+function renderList(target, items) {
+  target.innerHTML = "";
+  items.forEach((text) => {
+    const item = document.createElement("li");
+    item.textContent = text;
+    target.append(item);
+  });
+}
+
 function updateMetaDescription(content) {
   const description = document.querySelector('meta[name="description"]');
   const ogDescription = document.querySelector('meta[property="og:description"]');
@@ -361,73 +441,6 @@ function updateMetaDescription(content) {
   [description, ogDescription, twitterDescription].forEach((meta) => {
     if (meta) meta.setAttribute("content", content);
   });
-}
-
-function getStats() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveStats(stats) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
-}
-
-function saveResult(type) {
-  const stats = getStats();
-  stats[type] = (stats[type] || 0) + 1;
-  saveStats(stats);
-}
-
-function resetStats() {
-  localStorage.removeItem(STORAGE_KEY);
-  renderRanking();
-  walletStatus.textContent = "초기화 완료";
-}
-
-function getRankedStats() {
-  const stats = getStats();
-  return Object.keys(resultMap)
-    .map((type) => ({
-      type,
-      count: stats[type] || 0,
-      name: resultMap[type].name
-    }))
-    .sort((a, b) => b.count - a.count || a.type.localeCompare(b.type));
-}
-
-function renderRanking() {
-  const ranked = getRankedStats();
-  const total = ranked.reduce((sum, item) => sum + item.count, 0);
-  const topFive = ranked.slice(0, 5);
-
-  rankPreview.innerHTML = "";
-  rankList.innerHTML = "";
-  totalCount.textContent = `${total}회 참여`;
-
-  const previewItems = topFive.some((item) => item.count > 0) ? topFive.slice(0, 3) : ranked.slice(0, 3);
-
-  previewItems.forEach((item, index) => {
-    rankPreview.append(createRankItem(item, index, total, true));
-  });
-
-  topFive.forEach((item, index) => {
-    rankList.append(createRankItem(item, index, total, false));
-  });
-}
-
-function createRankItem(item, index, total, compact) {
-  const li = document.createElement("li");
-  const percent = total > 0 ? Math.round((item.count / total) * 100) : 0;
-  li.innerHTML = `
-    <strong>${index + 1}위</strong>
-    <span>${item.type} · ${item.name}<br><small>${compact ? "로컬 누적" : resultMap[item.type].title}</small></span>
-    <strong>${item.count}회${total > 0 ? ` · ${percent}%` : ""}</strong>
-  `;
-  return li;
 }
 
 function getShareUrl() {
@@ -482,7 +495,6 @@ function renderSharedResultFromQuery() {
 
   state.currentResult = { type, ...resultMap[type] };
   renderResult(type, resultMap[type]);
-  renderRanking();
   showScreen(resultScreen);
   return true;
 }
@@ -496,8 +508,6 @@ document.addEventListener("click", (event) => {
   if (action === "kakao-share") shareResult().catch(() => {
     shareNote.textContent = "공유가 잠시 삐끗했어요. 브라우저 공유나 링크 복사를 다시 시도해주세요.";
   });
-  if (action === "reset-stats") resetStats();
 });
 
-renderRanking();
 renderSharedResultFromQuery();
